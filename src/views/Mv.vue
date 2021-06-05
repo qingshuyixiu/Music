@@ -14,7 +14,7 @@
         </li>
         <li>
           <a :class="[page == 3 ? 'active' : '']" @click.prevent.stop="page = 3" href="#"
-            >网易出品</a
+            >出品MV</a
           >
         </li>
       </ul>
