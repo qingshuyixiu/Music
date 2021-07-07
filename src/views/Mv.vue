@@ -21,8 +21,8 @@
     </div>
     <component :is="cutMvPage" :mvResult="mvResult"></component>
     <go-top :topshow='topshow'></go-top>
-    <loading v-show="!flag"></loading>
-    <ol v-if="flag">
+    <loading v-show="flag"></loading>
+    <ol v-if="!flag">
       <li>
         <p>木有更多数据了~~</p>
       </li>
@@ -44,7 +44,7 @@ export default {
       limit:10,
       pages:0,
       timer:null,
-      flag:false,
+      flag:true,
       topshow:false,
     };
   },
@@ -94,7 +94,7 @@ export default {
           }else{
             //console.log(556623);
             clearTimeout(this.timer);
-            this.flag=true;
+            this.flag=false;
             window.removeEventListener("scroll", this.onScroll);
           }
           // this.isLoading = false;
@@ -116,7 +116,7 @@ export default {
             console.log(this.mvResult);
           }else{
             console.log(556623);
-            this.flag=true;
+            this.flag=false;
             clearTimeout(this.timer);
             window.removeEventListener("scroll", this.onScroll);
           }
@@ -132,7 +132,7 @@ export default {
         this.$axios('/personalized/mv').then(d=>{
           console.log(d);
           this.mvResult=d.data.result;
-          this.flag=true;
+          this.flag=false;
     })
         this.topshow=false;
         this.cutMvPage=RecMv;
@@ -140,7 +140,7 @@ export default {
       }else if(this.page==2){
         document.documentElement.scrollTop=0
         clearTimeout(this.timer);
-        this.flag=false;
+        this.flag=true;
         window.removeEventListener("scroll", this.onScroll);
         this.limit=10;
         this.$axios('/mv/first?limit=10').then(d=>{
@@ -153,7 +153,7 @@ export default {
       }else if(this.page==3){
         document.documentElement.scrollTop=0
         clearTimeout(this.timer);
-        this.flag=false;
+        this.flag=true;
         window.removeEventListener("scroll", this.onScroll);
         this.limit=10;
         this.pages=0;
@@ -172,8 +172,8 @@ export default {
     this.$axios('/personalized/mv').then(d=>{
       console.log(d);
       this.mvResult=d.data.result;
+      this.flag=false;
     })
-    this.flag=true;
   },
   beforeRouteLeave (to, from, next) {
      console.log(54321);

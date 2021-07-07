@@ -14,6 +14,7 @@
       </div>
     </div>
     <ul>
+      <loading v-if="show"></loading>
     <li-item v-for="(item,index) in songs" :key="item.id" @player="$emit('player',$event)" :item="item">
       <template v-slot:sortnum>
             <b>{{((index+1) &lt; 10) ? '0'+(index+1):index+1}}</b>
@@ -25,14 +26,15 @@
 <script>
 import Return from '@/components/Return.vue'
 import LiItem from '@/components/LiItem.vue'
+import Loading from '@/components/Loading.vue'
 export default {
   props:['id'],
   components: {
-    Return,LiItem
+    Return,LiItem,Loading
   },
   data() {
     return {
-      show:false,
+      show:true,
       pic:'',
       songs:[],
       details:'',
@@ -51,6 +53,7 @@ export default {
       return data;
     });
     this.details=d.data.playlist;
+    this.show=false;
     console.log(this.pic);
     console.log(this.songs);
     })
